@@ -15,7 +15,8 @@ const Header = () => {
 
   return (
     <div className="header">
-      <span>912121131313</span>
+      {/* <span>  </span> */}
+      <span><i className="ri-phone-line" ></i> 912121131313 </span>
       <span>Get 50% off on selected items | Shop Now</span>
       {loggedIn ? (
         <div>

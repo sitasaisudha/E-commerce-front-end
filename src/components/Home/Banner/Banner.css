@@ -16,6 +16,14 @@
   .banner_image img{
     width:100%;
     height:25vh;
+    @media (max-width : 1000px) {
+      width: 97%;
+     padding-right: 2vw;
+     padding-left: 2vw;
+   
+
+       }
+
   }
 
   

@@ -12,6 +12,9 @@
     font-size: 1rem;
     /* margin-left: 1rem; */
   }
+  .header i{
+    font-size: 3vh;
+  }
   .header .header_login_links{
     margin: none;
     color:white;
