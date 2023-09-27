@@ -3,7 +3,7 @@ import Header from '../Home/Header/Header';
 import { useNavigate } from 'react-router-dom';
 import heading from '../../assets/images/heading.png'
 import './ViewCart.css';
-import useProductContext from '../../hooks/useProductContext';
+
 
 const ViewCart = () => {
     const navigate = useNavigate();

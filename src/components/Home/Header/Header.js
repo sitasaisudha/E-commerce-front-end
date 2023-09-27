@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
-import useProductContext from "../../../hooks/useProductContext";
-
+import { MyContext } from "../../../context/MyContext";
+import { useContext } from "react";
 const Header = () => {
   const navigate = useNavigate();
-  const { loggedIn, setLoggedIn } = useProductContext();
+  const { loggedIn, setLoggedIn } =useContext(MyContext);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -26,6 +26,7 @@ const Header = () => {
         </div>
       ) : (
         <div>
+          
           <Link className="header_login_links" to={'/login'}>login</Link>
           <span className="header_login_links"> &nbsp; &nbsp; | &nbsp;&nbsp; </span>
           <Link className="header_login_links" to={'/signup'}>SignUp</Link>

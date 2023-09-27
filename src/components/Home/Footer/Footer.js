@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './Footer.css';
 import { FaSearch } from "react-icons/fa";
+import { GoHome } from "react-icons/fa";
 import axios from 'axios';
 import gridview_active from '../../../assets/images/gridview_active.png'
 import gridview_inactive from '../../../assets/images/gridview_inactive.png'
 import listview_active from '../../../assets/images/listview_active.png'
 import listview_inactive from '../../../assets/images/listview_inactive.png'
-import useProductContext from '../../../hooks/useProductContext';
+import { useContext } from "react";
+import { MyContext } from '../../../context/MyContext';
 import {useNavigate} from 'react-router-dom'
-
 const Footer = () => {
     const navigate = useNavigate();
     
-    const {loggedIn} = useProductContext();
+    const { loggedIn} =useContext(MyContext);
 
     const [products, setProducts] = useState([]);
     const [searchItem, setSearchItem] = useState('');
@@ -67,6 +68,20 @@ const Footer = () => {
     
             });
         }
+        else if(filterName == "sort"){
+            if(value === "price-high-to-low" || value === "name-z-to-a"){
+                setFilters({
+                    ...filters,
+                    ["sortOrder"]: "dsc",        
+                });
+            }
+            else{
+                setFilters({
+                    ...filters,
+                    ["sortOrder"]: "asc",     
+                });
+            }
+        }
         else{
             setFilters({
                 ...filters,
@@ -105,15 +120,17 @@ const Footer = () => {
                             <img src={gridview_inactive} alt="grid" onClick={() => { setGridView(true) }} />
                             <img src={listview_active} alt="list" onClick={() => setGridView(false)} />
                         </div>
+                        
                     }
 
                     <div className='filters-ontype'>
                         <div>
-                            <label>Product Type:</label>
+                            {/* <label>Product Type:</label> */}
                             <select
                                 value={filters.productType}
                                 onChange={(e) => handleFilterChange('type', e.target.value)}
                             >
+                                  <option value="all">Products Type</option> 
                                 <option value="all">Featured</option>
                                 <option value="In-ear">In-Ear</option>
                                 <option value="Over-ear">Over-Ear</option>
@@ -121,10 +138,11 @@ const Footer = () => {
                             </select>
                         </div>
                         <div>
-                            <label>Company:</label>
+                            {/* <label>Company:</label> */}
                             <select
                                 value={filters.company}
                                 onChange={(e) => handleFilterChange('brand', e.target.value)}>
+                                 <option value="all"> Company </option>
                                 <option value="all">Featured</option>
                                 <option value="Omiaro">Omiaro</option>
                                 <option value="Boult">Boult</option>
@@ -137,11 +155,12 @@ const Footer = () => {
                             </select>
                         </div>
                         <div>
-                            <label>Color:</label>
+                            {/* <label>Color:</label> */}
                             <select
                                 value={filters.color}
                                 onChange={(e) => handleFilterChange('color', e.target.value)}
                             >
+                                 <option value="all"> Color </option>
                                 <option value="all">Featured</option>
                                 <option value="Blue">Blue</option>
                                 <option value="Black">Black</option>
@@ -150,11 +169,12 @@ const Footer = () => {
                             </select>
                         </div>
                         <div>
-                            <label>Price Range:</label>
+                            {/* <label>Price Range:</label> */}
                             <select
                                 value={filters.priceRange}
                                 onChange={(e) => handleFilterChange('price', e.target.value)}
                             >
+                                 <option value="all"> Price range </option>
                                 <option value="all">Featured</option>
                                 <option value="0-1000">₹0-₹1000</option>
                                 <option value="1000-10000">₹1000-₹10000</option>
@@ -163,10 +183,9 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className="sort" >
                     <label>Sort By:</label>
                     <select
-                        className="sort"
                         value={filters.sort}
                         onChange={(e) => handleFilterChange('sort', e.target.value)}>
                         <option value="none">None</option>

@@ -1,18 +1,20 @@
 // import React from 'react';
 import React, { useState, useEffect } from 'react';
 import './Footer.css';
+import { GoHome } from "react-icons/go";
 import { FaSearch } from "react-icons/fa";
+import {MdOutlineAddShoppingCart} from "react-icons/md"
+import {FaUserLarge} from "react-icons/fa6";
+import {FaExclamation} from "react-icons/fa6";
 import axios from 'axios';
-import gridview_active from '../../../assets/images/gridview_active.png'
-import gridview_inactive from '../../../assets/images/gridview_inactive.png'
-import listview_active from '../../../assets/images/listview_active.png'
-import listview_inactive from '../../../assets/images/listview_inactive.png'
-import useProductContext from '../../../hooks/useProductContext';
+import { useContext } from "react";
+import { MyContext } from '../../../context/MyContext';
+
 import {useNavigate} from 'react-router-dom'
 const MobileFooter = () => {
     const navigate = useNavigate();
     
-    const {loggedIn} = useProductContext();
+    const {loggedIn} = useContext(MyContext);
 
     const [products, setProducts] = useState([]);
     const [searchItem, setSearchItem] = useState('');
@@ -85,16 +87,30 @@ const MobileFooter = () => {
         <div className='filters'>
               {/* filters applying section */}
               <div className='filter-section'>
+              <div className='filter-sort'>
+                    {/* <label>Sort By:</label> */}
+                    <select
+                        
+                        value={filters.sort}
+                        onChange={(e) => handleFilterChange('sort', e.target.value)}>
+                        <option value="none">sort By</option>
+                        <option value="price-low-to-high">Price:Lowest</option>
+                        <option value="price-high-to-low">Price:Highest</option>
+                        <option value="name-a-to-z">Name:(A to Z)</option>
+                        <option value="name-z-to-a">Name:(Z to A)</option>
+                    </select>
+                </div>
                 <div className='filter-without-sort'>
                   
 
                     <div className='filters-ontype'>
                         <div>
-                            <label>Product Type:</label>
+                            {/* <label>Product Type:</label> */}
                             <select
                                 value={filters.productType}
                                 onChange={(e) => handleFilterChange('type', e.target.value)}
                             >
+                                 <option value="all">Products</option>
                                 <option value="all">Featured</option>
                                 <option value="In-ear">In-Ear</option>
                                 <option value="Over-ear">Over-Ear</option>
@@ -102,10 +118,11 @@ const MobileFooter = () => {
                             </select>
                         </div>
                         <div>
-                            <label>Company:</label>
+                            {/* <label>Company:</label> */}
                             <select
                                 value={filters.company}
                                 onChange={(e) => handleFilterChange('brand', e.target.value)}>
+                                     <option value="all">Company </option>
                                 <option value="all">Featured</option>
                                 <option value="Omiaro">Omiaro</option>
                                 <option value="Boult">Boult</option>
@@ -118,11 +135,12 @@ const MobileFooter = () => {
                             </select>
                         </div>
                         <div>
-                            <label>Color:</label>
+                            {/* <label>Color:</label> */}
                             <select
                                 value={filters.color}
                                 onChange={(e) => handleFilterChange('color', e.target.value)}
                             >
+                                 <option value="all">Color </option>
                                 <option value="all">Featured</option>
                                 <option value="Blue">Blue</option>
                                 <option value="Black">Black</option>
@@ -131,11 +149,12 @@ const MobileFooter = () => {
                             </select>
                         </div>
                         <div>
-                            <label>Price Range:</label>
+                            {/* <label>Price Range:</label> */}
                             <select
                                 value={filters.priceRange}
                                 onChange={(e) => handleFilterChange('price', e.target.value)}
                             >
+                                 <option value="all">Price range: </option>
                                 <option value="all">Featured</option>
                                 <option value="0-1000">₹0-₹1000</option>
                                 <option value="1000-10000">₹1000-₹10000</option>
@@ -144,19 +163,7 @@ const MobileFooter = () => {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label>Sort By:</label>
-                    <select
-                        className="sort"
-                        value={filters.sort}
-                        onChange={(e) => handleFilterChange('sort', e.target.value)}>
-                        <option value="none">None</option>
-                        <option value="price-low-to-high">Price:Lowest</option>
-                        <option value="price-high-to-low">Price:Highest</option>
-                        <option value="name-a-to-z">Name:(A to Z)</option>
-                        <option value="name-z-to-a">Name:(Z to A)</option>
-                    </select>
-                </div>
+                
             </div>
         </div>
         <div className='all-products'>{products.map((item, index) => {
@@ -191,6 +198,17 @@ const MobileFooter = () => {
                     </div>
                 )
             })}</div> 
+
+            <div className='bottom-navigation'  > 
+                {/* <div>{GoHome} sita </div> */}
+                <div className='bottom-navigation-item' >  <GoHome/></div>
+                <div className='bottom-navigation-item' ><MdOutlineAddShoppingCart/></div>
+                <div className='bottom-navigation-item' ><span>  <FaUserLarge/>!</span></div>
+                
+                
+              
+             </div>
+              
         </div>
     );
 };

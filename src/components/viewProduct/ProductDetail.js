@@ -4,7 +4,7 @@ import './ProductDetail.css';
 import heading from '../../assets/images/heading.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import useProductContext from '../../hooks/useProductContext';
+
 
 const ProductDetail = () => {
     const navigate = useNavigate();

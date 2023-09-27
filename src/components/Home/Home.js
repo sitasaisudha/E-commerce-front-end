@@ -3,15 +3,16 @@ import "./Home.css";
 import Header from "./Header/Header";
 import Banner from "./Banner/Banner";
 import Footer from "./Footer/Footer";
-import useProductContext from "../../hooks/useProductContext";
 import { useMediaQuery } from 'react-responsive';
 import MobileHEader from "./Header/MobileHEader";
 import MobileBanner from "./Banner/MobileBanner";
 import MobileFooter from "./Footer/MobileFooter";
+import { MyContext } from "../../context/MyContext";
+import { useContext } from "react";
 
 const Home = () => {
   
-  const { setLoggedIn } = useProductContext();
+  const { loggedIn, setLoggedIn } =useContext(MyContext);
   const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'})
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
   
@@ -30,7 +31,7 @@ const Home = () => {
       {isDesktopOrLaptop ?<Footer /> : <MobileFooter/> }
       {/* <Banner /> */}
       {/* <Footer /> */}
-
+      
       
     </div>
   );
