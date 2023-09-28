@@ -325,11 +325,12 @@ select {
   left: 0;
 background-color: white;
 font-size: 2rem;
+color: #2E0052;
 display: flex;
 align-items: center;
 justify-content: space-between;
 /* padding: 0 1vh;  */
 }
-.bottom-navigation-item :hover{
-  border: 1px solid black;
+.bottom-navigation a.active{
+  border-top: 5px solid #2E0052;
 }

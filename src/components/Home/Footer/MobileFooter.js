@@ -15,6 +15,7 @@ const MobileFooter = () => {
     const navigate = useNavigate();
     
     const {loggedIn} = useContext(MyContext);
+    const {currentPage, setCurrentpage} = useContext(MyContext);
 
     const [products, setProducts] = useState([]);
     const [searchItem, setSearchItem] = useState('');
@@ -199,15 +200,7 @@ const MobileFooter = () => {
                 )
             })}</div> 
 
-            <div className='bottom-navigation'  > 
-                {/* <div>{GoHome} sita </div> */}
-                <div className='bottom-navigation-item' >  <GoHome/></div>
-                <div className='bottom-navigation-item' ><MdOutlineAddShoppingCart/></div>
-                <div className='bottom-navigation-item' ><span>  <FaUserLarge/>!</span></div>
-                
-                
-              
-             </div>
+          
               
         </div>
     );

@@ -8,17 +8,21 @@ import Congratulation from './components/Congratulations/Congratulation';
 import ViewCart from './components/ViewCart/ViewCart';
 import { MyContext } from './context/MyContext';
 import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import MobileviewProduct from './components/viewProduct/MobileviewProduct';
 
 function App() {
   const [loggedIn , setLoggedIn] = useState(true);
+  const [currentPage, setCurrentpage] = useState("home");
+  const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'})
   return (
-    <MyContext.Provider value={{loggedIn , setLoggedIn}}  >
+    <MyContext.Provider value={{loggedIn , setLoggedIn,currentPage, setCurrentpage}}  >
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/health" element={<Health />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/viewProduct" element={<ProductDetail />} />
+          <Route path="/viewProduct" element={ isDesktopOrLaptop ?<ProductDetail/> : <MobileviewProduct/>} />
           <Route path="/viewCart" element={<ViewCart />} />
           <Route path="/congrats" element={<Congratulation />} />
          
