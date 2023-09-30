@@ -10,19 +10,22 @@ import './ProductDetail.css';
 const MobileviewProduct = () => {
       const isDesktopOrLaptop = useMediaQuery({query: '(min-width: 1224px)'})
       const navigate = useNavigate();
+      const nbsp = String.fromCharCode(160);
     
       const [data, setData] = useState({})
       const [about,setAbout] = useState([]); 
+      const [rate, setRate] = useState(0);
+      const [count,setCount] = useState(0);
       
       useEffect(() => {
           axios.get(`http://localhost:4500/musicProducts/?_id=${localStorage.getItem("id")}`)
-              .then((response) => { setData(response.data);setAbout(response.data.about) })
+              .then((response) => { setData(response.data);setAbout(response.data.about) ; setRate( response.data.rating.rate) ; setCount(response.data.rating.count)})
               .catch((err) => { console.log(err) })
       }, [])
   
       const addCart = ()=>{
           localStorage.setItem("current",JSON.stringify(data))
-          const user = "21b01a12c8@svecw.edu.in"
+          const user = localStorage.getItem("user");
           try {
               axios.put(`http://localhost:4500/musicProducts/${data._id}/cart/${user}`)
                   .then((response) => { 
@@ -31,25 +34,25 @@ const MobileviewProduct = () => {
           } catch (error) {
               console.log(error);
           }
-  
+  console.log(data)
       }
-      let rate = parseInt(data.rating.rate)
-      let count = parseInt(data.rating.count)
+
+    //   let rate = parseInt(data.rating['rate'])
+    //   let count = parseInt(data.rating['count'])
+  
       
   
     return (
         <div>
             <MobileHEader/>
             <div className='view-product'>
-                <div className='back-to-home' onClick={() => { navigate('/') }} >
+                <div className='back' onClick={() => { navigate('/') }} >
                 <i className="ri-arrow-left-line"></i>
                     {/* <button onClick={() => { navigate('/') }} className='back-to-home-btn' > <i className="ri-arrow-left-line"></i> </button> */}
                 </div>
-                <button className='buy-now' onClick={()=>{addCart();navigate('/viewCart')}} >Buy Now</button>
+                <button className='buy-nw' onClick={()=>{addCart();navigate('/viewCart')}} >Buy Now</button>
 
-                {/* <div className='product-description'>
-                    <p>{data.description}</p>
-                </div> */}
+               
 
                 <div id="prodetails" className="section-p1">
                    
@@ -65,32 +68,39 @@ const MobileviewProduct = () => {
                     <div className="single-pro-details">
                         <h1>{data.name}</h1>
                         <div className='product-sub-details'>
-                           
-                            <p>{ [...new Array(Math.ceil(rate))].map( (e,i)=>(
+                        <p>{ [...new Array(Math.ceil(parseInt(rate)))].map( (e,i)=>(
                                 <span key={i}>⭐</span>
                                 
                             ) ) }
                             
-                            ({ parseInt( data.rating["count"])}) </p>
-                            <p> {count} </p>
+                            ({ parseInt( count)} customers) </p>
+                           
                         </div>
-                        <h3>Price - ₹ {data.price}</h3>
-                        <p>{data.color} | {data.type} headphone</p>
-                        <p className='details'>About this Product <br></br>
+                         <div className='product-description'>
+                            <p>{data.description}</p>
+                        </div>
+
+                        <h3  >Price - ₹ {data.price}</h3>
+                        <p  className='color-type'>{data.color} | {data.type} headphone</p>
+                        <div className='details'>About this Product <br></br>
                         <ul>
                             {about.map((item,index)=>{
                                 return (<li key={index}>{item}</li>)
                             })}
                         </ul>
                             
-                        </p>
+                        </div>
                         
                         <p><b>Available</b> - {data.available}</p>
                         <p><b>Brand</b> - {data.brand}</p>
                         <div className="buttons">
                         <button className='add-to-cart' onClick={()=>{addCart();navigate('/viewCart')}}>Add to Cart</button>
-                       
+                        <button className='buy-now' onClick={()=>{addCart();navigate('/viewCart')}} >Buy Now</button>
+
+                        
                         </div>
+                        <br></br>
+                        <br></br>
                     </div>
                 </div>
             </div>

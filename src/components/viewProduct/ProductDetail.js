@@ -4,6 +4,7 @@ import './ProductDetail.css';
 import heading from '../../assets/images/heading.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Home/Footer/Footer';
 
 
 const ProductDetail = () => {
@@ -11,16 +12,27 @@ const ProductDetail = () => {
     
     const [data, setData] = useState({})
     const [about,setAbout] = useState([]); 
-    
+    const[rate,setRate] = useState();
+    const[count,setCount] = useState()
     useEffect(() => {
         axios.get(`http://localhost:4500/musicProducts/?_id=${localStorage.getItem("id")}`)
-            .then((response) => { setData(response.data);setAbout(response.data.about) })
-            .catch((err) => { console.log(err) })
+            .then((response) => { 
+                setData(response.data);
+                setAbout(response.data.about); 
+                const fetched_rate =  parseInt(response.data.rating.rate, 10);
+                const fetched_count =  parseInt(response.data.rating.count, 10);
+                console.log(fetched_rate , typeof(fetched_rate));
+                console.log(fetched_count, typeof(fetched_count));
+
+                setRate( fetched_rate) ; 
+                setCount(fetched_count);
+            })
+            .catch((err) => { console.log("error sita ..", err) })
     }, [])
 
     const addCart = ()=>{
-        localStorage.setItem("current",JSON.stringify(data))
-        const user = "21b01a12c8@svecw.edu.in"
+        localStorage.setItem("current",JSON.stringify(data));
+        const user = localStorage.getItem("user");
         try {
             axios.put(`http://localhost:4500/musicProducts/${data._id}/cart/${user}`)
                 .then((response) => { 
@@ -51,7 +63,7 @@ const ProductDetail = () => {
                 <div className='product-description'>
                     <p>{data.description}</p>
                 </div>
-
+                <br></br>
                 <div id="prodetails" className="section-p1">
                     <div className="single-pro-image">
                         <img src={data.main_image} alt=""width="100%" id="mainImg" />
@@ -69,6 +81,22 @@ const ProductDetail = () => {
                     </div>
                     <div className="single-pro-details">
                         <h1>{data.name}</h1>
+                        <div className='product-sub-details'>
+                        {/* <p>
+                            {[...Array(Math.ceil(parseInt(rate)))].map((_, i) => (
+                          <span key={i}>⭐</span>
+                             ))}
+                             ({parseInt(count, 10)} customers)
+                        </p> */}
+
+                        <p>
+                        { [...new Array(rate)].map( (e,i)=>(
+                                <span key={i}>⭐</span>
+                                
+                            ) ) }({count} customers)
+                        </p>
+                           
+                        </div>
                         <h3>Price - ₹ {data.price}</h3>
                         <p>{data.color} | {data.type} headphone</p>
                         <p className='details'>About this Product <br></br>
@@ -89,7 +117,8 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
-                        
+            
+          <Footer/>              
         </div>
     );
 };

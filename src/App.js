@@ -10,6 +10,12 @@ import { MyContext } from './context/MyContext';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import MobileviewProduct from './components/viewProduct/MobileviewProduct';
+import Login from './components/Login/Login';
+import MobileLogin from './components/Login/MobileLogin';
+import SignUp from './components/Login/SignUp';
+import MobileSignUp from './components/Login/MobileSignUp';
+import Cart from './components/ViewCart/Cart';
+import Checkout from './components/Home/Checkout/Checkout';
 
 function App() {
   const [loggedIn , setLoggedIn] = useState(true);
@@ -21,10 +27,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/health" element={<Health />} />
+          <Route path="/login" element={ isDesktopOrLaptop ?<Login/> :<MobileLogin/>} />
+          <Route path="/register" element={ isDesktopOrLaptop ?<SignUp/> :<MobileSignUp/>} />
           <Route path="*" element={<NotFound />} />
           <Route path="/viewProduct" element={ isDesktopOrLaptop ?<ProductDetail/> : <MobileviewProduct/>} />
           <Route path="/viewCart" element={<ViewCart />} />
+          <Route path="/Cart-items" element={<Cart/>}  />
+          <Route path="/checkout" element={<Checkout/>}  />
           <Route path="/congrats" element={<Congratulation />} />
+         
+         
          
         </Routes>
         
